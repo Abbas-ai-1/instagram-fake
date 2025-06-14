@@ -1,0 +1,47 @@
+body {
+  background: #fafafa;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: white;
+  border: 1px solid #dbdbdb;
+  padding: 40px;
+  width: 350px;
+  text-align: center;
+}
+
+.logo {
+  width: 175px;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+}
+
+button {
+  background-color: #3897f0;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.forgot {
+  margin-top: 15px;
+}

